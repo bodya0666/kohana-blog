@@ -14,6 +14,8 @@ class Controller_Feed extends Controller_Base
 				->find();
 		$this->template->header = View::factory('header')
 			->bind('name', $name);
+		$script = array('media/answer.js',);
+		$this->template->script = $script;
 	}
 	public function action_index()
 	{

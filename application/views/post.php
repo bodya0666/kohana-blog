@@ -7,8 +7,12 @@
 			foreach ($comments as $key => $comment):
 			?>
 		<li class="comments">
-			<div class="nickname"><div><?php echo $comment->users->username; ?></div><div class="date"><?php echo $comment->date; ?></div></div>
+			<div class="nickname">
+				<div><?php echo $comment->users->username; ?></div>
+				<div class="date"><?php echo $comment->date; ?></div>
+			</div>
 			<div class="textcomment"><?php echo $comment->text; ?></div>
+			<div onclick="answer('comment', '<?php echo $comment->users->username; ?>')" class="answer">Ответить</div>
 		</li>
 	<?php endforeach; endif; ?>
 	</ul>
@@ -23,7 +27,7 @@
 		} ?>
 		<div class="comment-wrap">
 			Добавить коментарий:
-			<textarea name="comment" cols="30" rows="10"></textarea>
+			<textarea id="comment" name="comment" cols="30" rows="10"></textarea>
 			<input name="submit" type="submit">
 		</div>
 	</form>		

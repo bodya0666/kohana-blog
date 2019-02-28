@@ -150,25 +150,23 @@ Route::set('post', 'post(/<id>)', array('id' => '.+'))
             'controller' => 'feed',
             'action'     => 'post',		
     ));
-Route::set('add', 'add')
+Route::set('editpost', 'editpost(/<id>)', array('id' => '.+'))
+    ->defaults(array(
+        'controller' => 'feed',
+        'action'     => 'editpost',
+    ));
+Route::set('deletepost', 'deletepost(/<id>)', array('id' => '.+'))
+    ->defaults(array(
+        'controller' => 'feed',
+        'action'     => 'deletepost',
+    ));
+Route::set('feed', '<action>(/id)', array('action' => 'index|add|mypost'))
 	->defaults(array(
 		'controller' => 'feed',
-		'action'     => 'add',
 	));
-Route::set('logout', 'logout')
+Route::set('auth', '<action>(/<id>)', array('action' => 'login|logout|registration'))
 	->defaults(array(
 		'controller' => 'auth',
-		'action'     => 'logout',
-	));
-Route::set('login', 'login')
-	->defaults(array(
-		'controller' => 'auth',
-		'action'     => 'login',
-	));
-Route::set('registration', 'registration')
-	->defaults(array(
-		'controller' => 'auth',
-		'action'     => 'registration',
 	));
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(

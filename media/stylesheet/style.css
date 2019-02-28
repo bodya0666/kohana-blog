@@ -260,8 +260,8 @@ textarea:focus{
 }
 .comments{
 	background: #fff;
-	padding: 10px;
-	border-radius: 15px;
+	padding: 10px 25px;
+	border-radius: 50px;
 	margin: 5px 0 0 -10px;
 	color: #6CC372;
 	

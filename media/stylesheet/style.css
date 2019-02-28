@@ -262,7 +262,7 @@ textarea:focus{
 	background: #fff;
 	padding: 10px;
 	border-radius: 15px;
-	margin: 20px 0 0 -10px;
+	margin: 5px 0 0 -10px;
 	color: #6CC372;
 	
 }
@@ -288,7 +288,25 @@ h2{
 	color: #6CC372;
 }
 .answer{
-	/*margin: 10px 0 0 0;*/
 	display: flex;
+	flex-direction: column;	
 	justify-content: flex-end;
+	align-items: flex-end;
+	cursor: pointer;
+}
+.tree{
+	margin: 0 0 0 30px;
+}
+.children
+{
+	margin: 5px 0 0 0;
+}
+.asw_form{
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+.none{
+	display: none;
 }

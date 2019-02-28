@@ -1,4 +1,4 @@
- <ul class="wrapper">
+<ul class="wrapper">
  	<a class="add_btn" href="add"><div class="add"><i class="fas fa-plus"></i> Добавить</div></a>
 <?php 
 $i = 0;

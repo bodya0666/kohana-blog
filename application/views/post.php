@@ -1,21 +1,13 @@
 <div class="wrapper">
 	<h1><?php echo $post->name; ?></h1>
 	<p class="description"><?php echo $post->description ?></p>
-	<ul>
-		<?php if ($comments[0]):
-			echo '<h2>Коментарии:</h2>';
-			foreach ($comments as $key => $comment):
-			?>
-		<li class="comments">
-			<div class="nickname">
-				<div><?php echo $comment->users->username; ?></div>
-				<div class="date"><?php echo $comment->date; ?></div>
-			</div>
-			<div class="textcomment"><?php echo $comment->text; ?></div>
-			<div onclick="answer('comment', '<?php echo $comment->users->username; ?>')" class="answer">Ответить</div>
-		</li>
-	<?php endforeach; endif; ?>
-	</ul>
+
+	<?php
+	if($comments->arr)
+	{
+		echo '<h2>Коментарии:</h2>'; 
+		echo $comments;
+	} ?>
 	<form method="post" class="comment">
 		<?php 
 		if($error)
@@ -27,6 +19,7 @@
 		} ?>
 		<div class="comment-wrap">
 			Добавить коментарий:
+			<input type="hidden" name="parent_id" value="0">
 			<textarea id="comment" name="comment" cols="30" rows="10"></textarea>
 			<input name="submit" type="submit">
 		</div>

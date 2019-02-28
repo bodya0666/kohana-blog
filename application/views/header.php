@@ -1,6 +1,6 @@
 <header>
 	<div class="nav">
-		<a href="feed"><i class="fas fa-home"></i></a>
+		<a href="http://localhost/kohana/feed"><i class="fas fa-home"></i></a>
 	</div>
 	<div class="profile">
 		<a href=""><?php echo $name->username; ?></a>

@@ -19,7 +19,7 @@ while ($post[$i]):
 		<div class="name">			
 			<div class="text"><?php echo $post[$i]->name; ?></div>
 		</div>
-		<a href="post/<?php echo $post[$i]->id; ?>"><div class="read_more">Читать больше > ></div></a>
+		<a href="<?php echo URL::site("post/$post[$i]"); ?>"><div class="read_more">Читать больше > ></div></a>
 	</li>
 	<?php
 	$i++;

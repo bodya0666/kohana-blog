@@ -1,6 +1,7 @@
 <header>
 	<div class="nav">
-		<a href="http://localhost/kohana/feed"><i class="fas fa-home"></i></a>
+		<a href="<?php echo URL::site('feed'); ?>"><i class="fas fa-home"></i></a>
+        <a href="<?php echo URL::site('mypost'); ?>"><i class="fas fa-archive"></i></a>
 	</div>
 	<div class="profile">
 		<a href=""><?php echo $name->username; ?></a>

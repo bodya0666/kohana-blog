@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Фев 26 2019 г., 17:02
+-- Время создания: Фев 28 2019 г., 09:18
 -- Версия сервера: 5.7.14
 -- Версия PHP: 5.4.0
 
@@ -28,23 +28,32 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `text` text NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  `post_id` int(10) unsigned NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `answer_id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) unsigned NOT NULL,
+  `post_id` int(11) unsigned NOT NULL,
+  `text` text NOT NULL,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`,`post_id`),
-  KEY `post_id` (`post_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  KEY `post_id` (`post_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- Дамп данных таблицы `comments`
 --
 
-INSERT INTO `comments` (`id`, `text`, `user_id`, `post_id`, `date`, `answer_id`) VALUES
-(1, 'ewqeqw', 23, 220, '2019-02-26 19:43:24', 0),
-(2, '1234', 23, 220, '2019-02-26 20:02:21', 0);
+INSERT INTO `comments` (`id`, `date`, `user_id`, `post_id`, `text`, `parent_id`) VALUES
+(1, '2019-02-26 16:39:48', 23, 220, '1111111', 0),
+(2, '2019-02-26 16:41:46', 23, 220, 'kjhkjhu', 0),
+(3, '2019-02-26 16:42:12', 23, 220, 'kjhkjhu', 0),
+(4, '2019-02-26 16:42:26', 23, 220, 'kjhkjhu', 0),
+(5, '2019-02-26 16:42:56', 23, 220, 'kjhkjhu', 0),
+(6, '2019-02-26 16:43:10', 23, 220, 'kjhkjhu', 5),
+(7, '2019-02-26 16:43:55', 23, 220, 'kjhkjhu', 6),
+(8, '2019-02-26 16:45:37', 23, 220, 'kjhkjhu', 5),
+(9, '2019-02-26 17:44:08', 23, 220, 'test', 7),
+(10, '2019-02-26 17:44:14', 23, 220, 'test', 9),
+(11, '2019-02-28 11:18:20', 23, 220, 'ewqewq', 1);
 
 -- --------------------------------------------------------
 
@@ -56,26 +65,20 @@ CREATE TABLE IF NOT EXISTS `dates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `deadline` (`date`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
+  UNIQUE KEY `date` (`date`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 --
 -- Дамп данных таблицы `dates`
 --
 
 INSERT INTO `dates` (`id`, `date`) VALUES
-(6, '2019-02-11'),
-(11, '2019-02-12'),
-(5, '2019-02-13'),
-(8, '2019-02-15'),
-(1, '2019-02-18'),
-(3, '2019-02-19'),
-(18, '2019-02-21'),
-(17, '2019-02-22'),
-(7, '2019-02-25'),
-(19, '2019-02-26'),
-(10, '2019-12-20'),
-(9, '2019-12-21');
+(23, '2019-02-14'),
+(22, '2019-02-19'),
+(26, '2019-02-26'),
+(19, '2020-12-12'),
+(21, '2020-12-22'),
+(20, '2090-12-12');
 
 -- --------------------------------------------------------
 
@@ -92,16 +95,25 @@ CREATE TABLE IF NOT EXISTS `posts` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `deadline_id` (`date_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=223 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=232 ;
 
 --
 -- Дамп данных таблицы `posts`
 --
 
 INSERT INTO `posts` (`id`, `name`, `description`, `user_id`, `date_id`) VALUES
-(220, 'Lorem ipsum dolor', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est repellendus, itaque blanditiis modi neque quidem et! Reiciendis deleniti accusantium veniam iure eveniet dignissimos velit nostrum quasi debitis sunt iste, assumenda quae quisquam id cum doloremque aliquid voluptatibus esse modi adipisci culpa numquam dicta neque ut. Fugit, quam repellendus nostrum recusandae corporis sint? Impedit illum, placeat necessitatibus vel possimus voluptas eum excepturi mollitia, officiis aut quas expedita amet voluptates dolore ex quibusdam dolorem recusandae consequatur et iste sunt nam minus veniam qui! Possimus nihil ipsum beatae amet minus quasi tempora ducimus provident sequi, quo, excepturi temporibus ut commodi quae quas aut nulla, cum quis dolore. Dolores, voluptate, deserunt. Excepturi praesentium necessitatibus quis harum culpa, dolores soluta molestias, ex, rerum rem illum, temporibus animi pariatur in vitae cupiditate id. Doloribus veniam deleniti vitae, tenetur esse architecto, pariatur perspiciatis excepturi officia repellat odio nam? Molestiae veritatis natus iusto, optio tempore, corporis dolore cupiditate sit exercitationem deleniti explicabo obcaecati placeat quasi in pariatur est unde similique? Iste aut, nostrum, dolorem asperiores odio nam. Nulla deserunt tempore, iste nam, voluptatibus aspernatur hic? Quas eveniet, ab nemo. Laboriosam doloremque aperiam eius obcaecati tempore, nam minima est praesentium, numquam nesciunt voluptatem, ea ipsum reiciendis quasi, inventore? Labore, ipsum, voluptates? Nam vero distinctio nisi doloribus dolorem libero corrupti tenetur eius quis odio eveniet dignissimos, animi harum atque ut quo neque eos aperiam officiis! Mollitia, voluptatibus adipisci eos distinctio labore a vel quae aliquid voluptates assumenda similique voluptatum dolorum maxime ipsa corporis nemo. Doloremque assumenda nobis libero aliquam ad quasi amet sequi veniam beatae, cumque fugiat cum impedit eos quod corrupti ea. Doloremque quasi, officia ut totam, mollitia fuga beatae natus praesentium hic id, veritatis blanditiis eius nobis animi adipisci est! Aspernatur error dolorum, eos iste ut nobis deserunt! Vitae facere doloremque modi fugit rem laboriosam quisquam id officiis. Repudiandae ratione numquam perferendis quo, nemo voluptatibus repellat magnam nesciunt eum deserunt aspernatur itaque at molestiae, a quis quisquam saepe ipsum nihil eligendi ipsam veritatis adipisci provident officia rerum? Voluptate ipsum, tempora eius voluptates cumque obcaecati facere dolore, est, eos tenetur sapiente quod tempore? Unde quos illum accusamus nisi consequatur inventore deserunt nobis beatae voluptatem et soluta fugiat sint numquam officia aperiam neque, provident at. Fugit culpa ab autem repellat molestias doloremque dolores amet ex laborum aut! Cum dignissimos alias ratione iste rem consectetur deleniti non, explicabo consequuntur. Mollitia quia sed veniam voluptates pariatur, delectus error excepturi labore, officiis vitae iste dolore natus? Eaque est porro, magni, laboriosam temporibus facilis vero maxime delectus sapiente beatae ut! Error voluptatum accusamus architecto sapiente, deleniti sed incidunt repudiandae reprehenderit ratione similique corporis laborum tenetur commodi, voluptatem inventore deserunt assumenda a. Nobis obcaecati ratione ullam voluptatum praesentium illo quis officia quibusdam quidem dicta quos numquam modi doloremque, nisi soluta non dolores facilis adipisci, itaque facere placeat consectetur saepe quae maxime! Recusandae repellat esse porro omnis veniam officia similique corrupti, possimus provident cupiditate libero hic placeat explicabo eum accusantium, cum aut, voluptate temporibus, delectus inventore? Animi delectus velit quibusdam, aliquam temporibus. Iusto error dignissimos ipsam!', 23, 19),
-(221, 'Lorem ipsum dolor', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est repellendus, itaque blanditiis modi neque quidem et! Reiciendis deleniti accusantium veniam iure eveniet dignissimos velit nostrum quasi debitis sunt iste, assumenda quae quisquam id cum doloremque aliquid voluptatibus esse modi adipisci culpa numquam dicta neque ut. Fugit, quam repellendus nostrum recusandae corporis sint? Impedit illum, placeat necessitatibus vel possimus voluptas eum excepturi mollitia, officiis aut quas expedita amet voluptates dolore ex quibusdam dolorem recusandae consequatur et iste sunt nam minus veniam qui! Possimus nihil ipsum beatae amet minus quasi tempora ducimus provident sequi, quo, excepturi temporibus ut commodi quae quas aut nulla, cum quis dolore. Dolores, voluptate, deserunt. Excepturi praesentium necessitatibus quis harum culpa, dolores soluta molestias, ex, rerum rem illum, temporibus animi pariatur in vitae cupiditate id. Doloribus veniam deleniti vitae, tenetur esse architecto, pariatur perspiciatis excepturi officia repellat odio nam? Molestiae veritatis natus iusto, optio tempore, corporis dolore cupiditate sit exercitationem deleniti explicabo obcaecati placeat quasi in pariatur est unde similique? Iste aut, nostrum, dolorem asperiores odio nam. Nulla deserunt tempore, iste nam, voluptatibus aspernatur hic? Quas eveniet, ab nemo. Laboriosam doloremque aperiam eius obcaecati tempore, nam minima est praesentium, numquam nesciunt voluptatem, ea ipsum reiciendis quasi, inventore? Labore, ipsum, voluptates? Nam vero distinctio nisi doloribus dolorem libero corrupti tenetur eius quis odio eveniet dignissimos, animi harum atque ut quo neque eos aperiam officiis! Mollitia, voluptatibus adipisci eos distinctio labore a vel quae aliquid voluptates assumenda similique voluptatum dolorum maxime ipsa corporis nemo. Doloremque assumenda nobis libero aliquam ad quasi amet sequi veniam beatae, cumque fugiat cum impedit eos quod corrupti ea. Doloremque quasi, officia ut totam, mollitia fuga beatae natus praesentium hic id, veritatis blanditiis eius nobis animi adipisci est! Aspernatur error dolorum, eos iste ut nobis deserunt! Vitae facere doloremque modi fugit rem laboriosam quisquam id officiis. Repudiandae ratione numquam perferendis quo, nemo voluptatibus repellat magnam nesciunt eum deserunt aspernatur itaque at molestiae, a quis quisquam saepe ipsum nihil eligendi ipsam veritatis adipisci provident officia rerum? Voluptate ipsum, tempora eius voluptates cumque obcaecati facere dolore, est, eos tenetur sapiente quod tempore? Unde quos illum accusamus nisi consequatur inventore deserunt nobis beatae voluptatem et soluta fugiat sint numquam officia aperiam neque, provident at. Fugit culpa ab autem repellat molestias doloremque dolores amet ex laborum aut! Cum dignissimos alias ratione iste rem consectetur deleniti non, explicabo consequuntur. Mollitia quia sed veniam voluptates pariatur, delectus error excepturi labore, officiis vitae iste dolore natus? Eaque est porro, magni, laboriosam temporibus facilis vero maxime delectus sapiente beatae ut! Error voluptatum accusamus architecto sapiente, deleniti sed incidunt repudiandae reprehenderit ratione similique corporis laborum tenetur commodi, voluptatem inventore deserunt assumenda a. Nobis obcaecati ratione ullam voluptatum praesentium illo quis officia quibusdam quidem dicta quos numquam modi doloremque, nisi soluta non dolores facilis adipisci, itaque facere placeat consectetur saepe quae maxime! Recusandae repellat esse porro omnis veniam officia similique corrupti, possimus provident cupiditate libero hic placeat explicabo eum accusantium, cum aut, voluptate temporibus, delectus inventore? Animi delectus velit quibusdam, aliquam temporibus. Iusto error dignissimos ipsam!', 23, 18),
-(222, 'Lorem ipsum dolor', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est repellendus, itaque blanditiis modi neque quidem et! Reiciendis deleniti accusantium veniam iure eveniet dignissimos velit nostrum quasi debitis sunt iste, assumenda quae quisquam id cum doloremque aliquid voluptatibus esse modi adipisci culpa numquam dicta neque ut. Fugit, quam repellendus nostrum recusandae corporis sint? Impedit illum, placeat necessitatibus vel possimus voluptas eum excepturi mollitia, officiis aut quas expedita amet voluptates dolore ex quibusdam dolorem recusandae consequatur et iste sunt nam minus veniam qui! Possimus nihil ipsum beatae amet minus quasi tempora ducimus provident sequi, quo, excepturi temporibus ut commodi quae quas aut nulla, cum quis dolore. Dolores, voluptate, deserunt. Excepturi praesentium necessitatibus quis harum culpa, dolores soluta molestias, ex, rerum rem illum, temporibus animi pariatur in vitae cupiditate id. Doloribus veniam deleniti vitae, tenetur esse architecto, pariatur perspiciatis excepturi officia repellat odio nam? Molestiae veritatis natus iusto, optio tempore, corporis dolore cupiditate sit exercitationem deleniti explicabo obcaecati placeat quasi in pariatur est unde similique? Iste aut, nostrum, dolorem asperiores odio nam. Nulla deserunt tempore, iste nam, voluptatibus aspernatur hic? Quas eveniet, ab nemo. Laboriosam doloremque aperiam eius obcaecati tempore, nam minima est praesentium, numquam nesciunt voluptatem, ea ipsum reiciendis quasi, inventore? Labore, ipsum, voluptates? Nam vero distinctio nisi doloribus dolorem libero corrupti tenetur eius quis odio eveniet dignissimos, animi harum atque ut quo neque eos aperiam officiis! Mollitia, voluptatibus adipisci eos distinctio labore a vel quae aliquid voluptates assumenda similique voluptatum dolorum maxime ipsa corporis nemo. Doloremque assumenda nobis libero aliquam ad quasi amet sequi veniam beatae, cumque fugiat cum impedit eos quod corrupti ea. Doloremque quasi, officia ut totam, mollitia fuga beatae natus praesentium hic id, veritatis blanditiis eius nobis animi adipisci est! Aspernatur error dolorum, eos iste ut nobis deserunt! Vitae facere doloremque modi fugit rem laboriosam quisquam id officiis. Repudiandae ratione numquam perferendis quo, nemo voluptatibus repellat magnam nesciunt eum deserunt aspernatur itaque at molestiae, a quis quisquam saepe ipsum nihil eligendi ipsam veritatis adipisci provident officia rerum? Voluptate ipsum, tempora eius voluptates cumque obcaecati facere dolore, est, eos tenetur sapiente quod tempore? Unde quos illum accusamus nisi consequatur inventore deserunt nobis beatae voluptatem et soluta fugiat sint numquam officia aperiam neque, provident at. Fugit culpa ab autem repellat molestias doloremque dolores amet ex laborum aut! Cum dignissimos alias ratione iste rem consectetur deleniti non, explicabo consequuntur. Mollitia quia sed veniam voluptates pariatur, delectus error excepturi labore, officiis vitae iste dolore natus? Eaque est porro, magni, laboriosam temporibus facilis vero maxime delectus sapiente beatae ut! Error voluptatum accusamus architecto sapiente, deleniti sed incidunt repudiandae reprehenderit ratione similique corporis laborum tenetur commodi, voluptatem inventore deserunt assumenda a. Nobis obcaecati ratione ullam voluptatum praesentium illo quis officia quibusdam quidem dicta quos numquam modi doloremque, nisi soluta non dolores facilis adipisci, itaque facere placeat consectetur saepe quae maxime! Recusandae repellat esse porro omnis veniam officia similique corrupti, possimus provident cupiditate libero hic placeat explicabo eum accusantium, cum aut, voluptate temporibus, delectus inventore? Animi delectus velit quibusdam, aliquam temporibus. Iusto error dignissimos ipsam!', 23, 18);
+(220, 'test', 'test description', 15, 20),
+(221, 'test', 'test description', 15, 19),
+(222, 'test', 'test description', 15, 20),
+(223, 'rock and roll', 'rock and roll', 23, 26),
+(224, 'rock and roll', '322', 23, 26),
+(225, 'rock and roll', '322', 23, 26),
+(226, 'rock and roll', '322', 23, 26),
+(227, 'rock and roll', '322', 23, 26),
+(228, 'rock and roll', '322', 23, 26),
+(229, 'rock and roll', '322', 23, 26),
+(230, 'rock and roll', 'tea', 23, 26),
+(231, 'rock and roll', 'tea', 23, 26);
 
 -- --------------------------------------------------------
 
@@ -164,7 +176,9 @@ INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
 (22, 1),
 (23, 1),
 (24, 1),
-(25, 1);
+(25, 1),
+(26, 1),
+(27, 1);
 
 -- --------------------------------------------------------
 
@@ -182,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
 
 --
 -- Дамп данных таблицы `users`
@@ -211,9 +225,11 @@ INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_logi
 (20, 'gamingcqweqwehannel.zik@gmail.com', 'maximchuewqeqwek007', '69880fdfbfdba2802ce006c5c20bc42a869aa61ef41c6bfcf52b2fb1de8a9d0f', 0, NULL),
 (21, 'gamingc31231231annel.zik@gmail.com', 'user3949773123', '2b124db8fbe01b570192ee48812032ce1df0474b6eec4ddc23543fd7744fd513', 0, NULL),
 (22, 'firstuser@mail.com', 'firstuser', 'de10fdd235c6ff4cdd6f9fbab1d4920f82cca493598d73a35e30b0e5d0da5ead', 5, 1549835125),
-(23, 'admin@s.ff', 'admin', '03868c39f2511ac8e4f7c3bd9c1a19522cfbc5fc04b1e2e3f74aca37e9ae5c26', 58, 1551202023),
+(23, 'admin@s.ff', 'admin', '03868c39f2511ac8e4f7c3bd9c1a19522cfbc5fc04b1e2e3f74aca37e9ae5c26', 63, 1551345491),
 (24, 'gamin123123e1gchannel.zik@gmail.com', 'maximchuk007dasdas', '4511ec52e1932f1bdf54ed233851628066193be44304628b94f84e190c49cfd2', 0, NULL),
-(25, 'gamingdasdas1231channel.zik@gmail.com', 'maximchuk007dasdasd', '4de0d7610500a387fc471e73b2a9bfe7a52ef19e41236c09b4ff3a5652d9713f', 1, 1549924817);
+(25, 'gamingdasdas1231channel.zik@gmail.com', 'maximchuk007dasdasd', '4de0d7610500a387fc471e73b2a9bfe7a52ef19e41236c09b4ff3a5652d9713f', 1, 1549924817),
+(26, 'sadasd@das.vvvv', 'sadasd@das.321', 'a0a43d6a293ad9764a1d3e86acd9a157d9ea697c855b38100b4317e990bb30ce', 3, 1551198834),
+(27, 'rootuser@uu.uu', 'rootuser', '923dba6b0f8994653b6fa492fb5c19ebf5579b1118b66a16ac503c037948dbeb', 2, 1551263026);
 
 -- --------------------------------------------------------
 
@@ -232,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `user_tokens` (
   UNIQUE KEY `uniq_token` (`token`),
   KEY `fk_user_id` (`user_id`),
   KEY `expires` (`expires`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Дамп данных таблицы `user_tokens`
@@ -241,7 +257,8 @@ CREATE TABLE IF NOT EXISTS `user_tokens` (
 INSERT INTO `user_tokens` (`id`, `user_id`, `user_agent`, `token`, `created`, `expires`) VALUES
 (1, 23, '6f7e2c0b2720a430810d747f318e18152df220d3', '703da4259fac7fdc7e0853a581e97a08e3c6b013', 1549933647, 1551143247),
 (2, 23, '6f7e2c0b2720a430810d747f318e18152df220d3', '07a5ba1e1b3917981c6fd7b0e6e1521927cbda5e', 1550090570, 1551300170),
-(3, 23, '6f7e2c0b2720a430810d747f318e18152df220d3', 'f9da5c9a686b98f345d7a0648d18213b889e3c4b', 1550106824, 1551316424);
+(3, 23, '6f7e2c0b2720a430810d747f318e18152df220d3', 'f9da5c9a686b98f345d7a0648d18213b889e3c4b', 1550106824, 1551316424),
+(4, 26, '9dcf0dcbcf5df6da4ef99795e25554e7a07cb6a7', 'fc150b92bc3a9ee2d589e86ee6e30a6677bae421', 1551198257, 1552407857);
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -251,8 +268,8 @@ INSERT INTO `user_tokens` (`id`, `user_id`, `user_agent`, `token`, `created`, `e
 -- Ограничения внешнего ключа таблицы `comments`
 --
 ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`);
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`),
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `posts`

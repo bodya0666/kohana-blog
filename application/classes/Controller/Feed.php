@@ -14,7 +14,7 @@ class Controller_Feed extends Controller_Base
 				->find();
 		$this->template->header = View::factory('header')
 			->bind('name', $name);
-		$script = array('media/answer.js',);
+		$script = array('media/js/answer.js',);
 		$this->template->script = $script;
 	}
 	public function action_index()
@@ -81,26 +81,39 @@ class Controller_Feed extends Controller_Base
  		$comments = ORM::factory('comment')
  			->join('users')
 			->on('users.id', '=', 'user_id')
-			->order_by('comment.date', 'DESC')
+			->order_by('comment.parent_id', 'ASC')
 			->where('post_id', '=', $id)
 			->find_all();
+		$m_comment = Model::factory('comments');
+		$arr_comment = $m_comment->to_arr($comments);
+		if ($arr_comment) 
+		{
+			$arr = $m_comment->create_tree($arr_comment);
+		}
+		else
+		{
+			$arr = array();
+		}
+		$comments = View::factory('comments')
+				->bind('arr', $arr);
  		if ($post->name) 
  		{
+ 			$post_comm = Validation::factory($_POST);
         	if (isset($_POST['submit']))
             {
-            	$comment = Validation::factory($_POST);
-            	$comment
+            	$post_comm
             		->rule('comment', 'not_empty');
-            	if ($comment->check()) 
+            	if ($post_comm->check()) 
 				{
 					$add_comment = ORM::factory('comment')
-						->set('text', $comment['comment'])
+						->set('text', $post_comm['comment'])
+						->set('parent_id', $post_comm['parent_id'])
 						->set('post_id', $id)
 						->set('user_id', $_SESSION['auth_user'])
 						->save();
 						HTTP::redirect("post/$id");
 				}
-            	$error = $comment->errors('validation');
+            	$error = $post_comm->errors('validation');
             }
  		}
  		else
@@ -115,5 +128,3 @@ class Controller_Feed extends Controller_Base
 		$this->template->content = $content;
 	}
 }
-	
-

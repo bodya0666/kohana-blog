@@ -28,5 +28,5 @@
 			<label>Подтверждение пароля:</label>
 			<input name="password_confirm" type="password" value="<?php if($post) echo $post['password_confirm']; ?>">
 			<input type="submit" type="text">
-			<div class="center"><a href="login">Вход</a></div>
+			<div class="center"><a href="<?php echo URL::site('login'); ?>">Вход</a></div>
 		</form>
